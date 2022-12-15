@@ -1,0 +1,41 @@
+{
+  "version": "https://jsonfeed.org/version/1",
+  "title": "AVX's Blog",
+  "home_page_url": "/",
+  "feed_url": "/",
+
+
+  "items": [
+  
+  
+    {
+      "id": "/2022/12/11/easyanticheat-cr3-protection/",
+      "title": "Analyzing EasyAntiCheat's CR3 Protection",
+      "content_text": "Introduction As the desire for competitive gaming intensifies, so does the need to ensure that all players are on a level playing field. Enter EasyAntiCheat - the formidable wall between cheaters and legitimately minded players. This ingeniously crafted system utilizes sophisticated algorithms and cutting-edge software to detect, prevent and protect players from a variety of nefarious activities. Through its ability to stay one step ahead of modern cheating tactics, EasyAntiCheat has become the go-to solution for many gaming communities.",
+      "url": "/2022/12/11/easyanticheat-cr3-protection/",
+      "date_published": "2022-12-11 00:00:00 +0000 UTC",
+      "tags": ["EasyAntiCheat"]
+    }
+  
+  , 
+    {
+      "id": "/2022/11/29/battleye-dll-protection/",
+      "title": "Defeating BattlEye's Dll Protection",
+      "content_text": "Introduction The anti-cheat software BattlEye, considered the gold standard, has a catastrophic weakness that makes it easy for an attacker to insert code into the game\u0026rsquo;s address space.\nDll injection is a well-known idea, but because of the numerous anti-cheat techniques used, attackers have resorted to manually mapping their modules into the game\u0026rsquo;s address space in order to get beyond the checks employed.\nLoad Image Callback Several separate callbacks will initially be registered by the BattlEye driver when it is loaded into the kernel.",
+      "url": "/2022/11/29/battleye-dll-protection/",
+      "date_published": "2022-11-29 00:00:00 +0000 UTC",
+      "tags": ["BattlEye"]
+    }
+  
+  , 
+    {
+      "id": "/2022/11/24/vanguard-import-protection/",
+      "title": "Defeating Vanguard's Import Protection",
+      "content_text": "Introduction Valorant, being a highly competitive game, demands that there be no cheats and calls for the highest level of protection.\nIn order to prevent an attacker from studying the game and anticheat\u0026rsquo;s internal behaviour, Vanguard, the line between heroes and cheats, employs a variety of techniques, such as import protection.\nImport protection is crucial because it prevents malicious actors from drawing firm conclusions about the actions of the code, even inside virtualized methods.",
+      "url": "/2022/11/24/vanguard-import-protection/",
+      "date_published": "2022-11-24 00:00:00 +0000 UTC",
+      "tags": ["Vanguard"]
+    }
+  
+  ]
+}

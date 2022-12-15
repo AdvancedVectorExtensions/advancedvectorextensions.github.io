@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AVX&#39;s Blog</title>
+    <link>/</link>
+    <description>Recent content on AVX&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2022 AdvancedVectorExtensions</copyright>
+    <lastBuildDate>Sun, 11 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Analyzing EasyAntiCheat&#39;s CR3 Protection</title>
+      <link>/2022/12/11/easyanticheat-cr3-protection/</link>
+      <pubDate>Sun, 11 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/2022/12/11/easyanticheat-cr3-protection/</guid>
+      <description>Introduction As the desire for competitive gaming intensifies, so does the need to ensure that all players are on a level playing field. Enter EasyAntiCheat - the formidable wall between cheaters and legitimately minded players. This ingeniously crafted system utilizes sophisticated algorithms and cutting-edge software to detect, prevent and protect players from a variety of nefarious activities. Through its ability to stay one step ahead of modern cheating tactics, EasyAntiCheat has become the go-to solution for many gaming communities.</description>
+    </item>
+    
+    <item>
+      <title>Defeating BattlEye&#39;s Dll Protection</title>
+      <link>/2022/11/29/battleye-dll-protection/</link>
+      <pubDate>Tue, 29 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/2022/11/29/battleye-dll-protection/</guid>
+      <description>Introduction The anti-cheat software BattlEye, considered the gold standard, has a catastrophic weakness that makes it easy for an attacker to insert code into the game&amp;rsquo;s address space.
+Dll injection is a well-known idea, but because of the numerous anti-cheat techniques used, attackers have resorted to manually mapping their modules into the game&amp;rsquo;s address space in order to get beyond the checks employed.
+Load Image Callback Several separate callbacks will initially be registered by the BattlEye driver when it is loaded into the kernel.</description>
+    </item>
+    
+    <item>
+      <title>Defeating Vanguard&#39;s Import Protection</title>
+      <link>/2022/11/24/vanguard-import-protection/</link>
+      <pubDate>Thu, 24 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/2022/11/24/vanguard-import-protection/</guid>
+      <description>Introduction Valorant, being a highly competitive game, demands that there be no cheats and calls for the highest level of protection.
+In order to prevent an attacker from studying the game and anticheat&amp;rsquo;s internal behaviour, Vanguard, the line between heroes and cheats, employs a variety of techniques, such as import protection.
+Import protection is crucial because it prevents malicious actors from drawing firm conclusions about the actions of the code, even inside virtualized methods.</description>
+    </item>
+    
+  </channel>
+</rss>

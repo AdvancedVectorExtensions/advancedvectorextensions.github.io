@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Vanguard on AVX&#39;s Blog</title>
+    <link>/tags/vanguard/</link>
+    <description>Recent content in Vanguard on AVX&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2022 AdvancedVectorExtensions</copyright>
+    <lastBuildDate>Thu, 24 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/vanguard/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Defeating Vanguard&#39;s Import Protection</title>
+      <link>/2022/11/24/vanguard-import-protection/</link>
+      <pubDate>Thu, 24 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/2022/11/24/vanguard-import-protection/</guid>
+      <description>Introduction Valorant, being a highly competitive game, demands that there be no cheats and calls for the highest level of protection.
+In order to prevent an attacker from studying the game and anticheat&amp;rsquo;s internal behaviour, Vanguard, the line between heroes and cheats, employs a variety of techniques, such as import protection.
+Import protection is crucial because it prevents malicious actors from drawing firm conclusions about the actions of the code, even inside virtualized methods.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Defeating BattlEye&#39;s Dll Protection | AVX&#39;s Blog</title>
+  <link rel="stylesheet" href="/assets/css/post.css" />
+  <script defer src="/assets/js/lbox.js"></script>
+  
+  <link rel="stylesheet" href="/assets/css/common.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+  <a class="site-title" href="/">AVX&#39;s Blog</a>
+</header>
+
+      <section class="article">
+        <div class="article-header">
+          <h2 class="article-title">Defeating BattlEye&#39;s Dll Protection</h2>
+          <small class="date">Tue Nov 29, 2022</small>
+          <div class="tags">
+            
+            <a href="/tags/BattlEye" class="tag">BattlEye</a>
+            
+          </div>
+        </div>
+        <div class="content"><h3 id="introduction">Introduction</h3>
+<p>The anti-cheat software BattlEye, considered the gold standard, has a catastrophic weakness that makes it easy for an attacker to insert code into the game&rsquo;s address space.</p>
+<p>Dll injection is a well-known idea, but because of the numerous anti-cheat techniques used, attackers have resorted to manually mapping their modules into the game&rsquo;s address space in order to get beyond the checks employed.</p>
+<h3 id="load-image-callback">Load Image Callback</h3>
+<p>Several separate callbacks will initially be registered by the BattlEye driver when it is loaded into the kernel. In this article, the file-system and image load callbacks are the callbacks that are under discussion.</p>
+<p>A dll will initially be delivered to the image load callback for initial verification when it is injected into a game that is BattlEye protected. The callback will start by allocating a pool of memory to keep details about the dll.</p>
+<blockquote>
+<p>The callback also handles the verification of kernel images in a similar fashion.  This will not be discussed in this article.</p>
+</blockquote>
+<p><img src="https://i.imgur.com/kLQoZrM.png" alt=""></p>
+<p>Following allocation and verification of the pool, the callback will start copying the image name to <code>Pool+0xC</code> after filling the memory with zeros.</p>
+<p><img src="https://i.imgur.com/DfH0ex9.png" alt=""></p>
+<p>After the image&rsquo;s name is copied to the allocation, the function will begin writing other crucial information such as the image&rsquo;s base and size.</p>
+<p><img src="https://i.imgur.com/Dpo7hf2.png" alt=""></p>
+<p>Once the load image callback has concluded, it will submit the data to BEService to start the certification verification process. When it determines if a dll is legitimate or malicious, BEService will alert BEDaisy&rsquo;s file-system callback.</p>
+<h3 id="filesystem-callback">FileSystem Callback</h3>
+<p>To avoid interfering with other processes, the file-system callback will start by making sure the caller process is the BattlEye protected game.</p>
+<p><img src="https://i.imgur.com/mbMQWIS.png" alt=""></p>
+<p>It will further guarantee that the picture being judged is a PE binary.</p>
+<p><img src="https://i.imgur.com/BNBMfYm.png" alt=""></p>
+<p>It will start copying the relevant information.</p>
+<p><img src="https://i.imgur.com/1ZL5gMY.png" alt=""></p>
+<p>Now it will iterate a collection of dll&rsquo;s and determinate the one being verified.</p>
+<p><img src="https://i.imgur.com/TnRo6Gc.png" alt=""></p>
+<p>If the verification steps were successful, the dll will be recognised as trustworthy and will not be prevented from loading.</p>
+<p><img src="https://i.imgur.com/W35ClBS.png" alt=""></p>
+<h3 id="defeating">Defeating</h3>
+<p>To mitigate this from usermode, one can simply hook the file reading functions (CreateFile) that BattlEye uses for certificate verification in usermode and employ a signed file that is accepted by BattlEye.</p>
+<p>If this route is taken, one must also thwart the integrity checks employed using NtReadVirtualMemory as well as when BattlEye reports crucial dll information.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>Complete dll injection is now achieved.</p>
+<p><img src="https://i.imgur.com/39dIEWV.png" alt=""></p>
+</div>
+      </section>
+      <footer>
+  <p>&copy; 2022 </p>
+</footer>
+    </main>
+  </body>
+</html>

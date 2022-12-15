@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>EasyAntiCheat on AVX&#39;s Blog</title>
+    <link>/tags/easyanticheat/</link>
+    <description>Recent content in EasyAntiCheat on AVX&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2022 AdvancedVectorExtensions</copyright>
+    <lastBuildDate>Sun, 11 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/easyanticheat/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Analyzing EasyAntiCheat&#39;s CR3 Protection</title>
+      <link>/2022/12/11/easyanticheat-cr3-protection/</link>
+      <pubDate>Sun, 11 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/2022/12/11/easyanticheat-cr3-protection/</guid>
+      <description>Introduction As the desire for competitive gaming intensifies, so does the need to ensure that all players are on a level playing field. Enter EasyAntiCheat - the formidable wall between cheaters and legitimately minded players. This ingeniously crafted system utilizes sophisticated algorithms and cutting-edge software to detect, prevent and protect players from a variety of nefarious activities. Through its ability to stay one step ahead of modern cheating tactics, EasyAntiCheat has become the go-to solution for many gaming communities.</description>
+    </item>
+    
+  </channel>
+</rss>

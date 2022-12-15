@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Defeating Vanguard&#39;s Import Protection | AVX&#39;s Blog</title>
+  <link rel="stylesheet" href="/assets/css/post.css" />
+  <script defer src="/assets/js/lbox.js"></script>
+  
+  <link rel="stylesheet" href="/assets/css/common.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+  <a class="site-title" href="/">AVX&#39;s Blog</a>
+</header>
+
+      <section class="article">
+        <div class="article-header">
+          <h2 class="article-title">Defeating Vanguard&#39;s Import Protection</h2>
+          <small class="date">Thu Nov 24, 2022</small>
+          <div class="tags">
+            
+            <a href="/tags/Vanguard" class="tag">Vanguard</a>
+            
+          </div>
+        </div>
+        <div class="content"><h3 id="introduction">Introduction</h3>
+<p>Valorant, being a highly competitive game, demands that there be no cheats and calls for the highest level of protection.</p>
+<p>In order to prevent an attacker from studying the game and anticheat&rsquo;s internal behaviour, Vanguard, the line between heroes and cheats, employs a variety of techniques, such as import protection.</p>
+<p>Import protection is crucial because it prevents malicious actors from drawing firm conclusions about the actions of the code, even inside virtualized methods.</p>
+<h3 id="exploration">Exploration</h3>
+<p>In order to resolve the intended export in a way that is concealed from a reverser, Vanguard has chosen to design distinct functions that, when called, do this task.</p>
+<p>Vanguard begins each of these routines by unrolling the string using the xored constants before calling a separate function to handle the specified export.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">__int64</span> <span style="color:#66d9ef">__fastcall</span> LI<span style="color:#f92672">::</span>ExEnumHandleTable(<span style="color:#66d9ef">__int64</span> a1)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  v17.m128i_i64[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x3DC8C9558A64BA8A</span>i64;
+</span></span><span style="display:flex;"><span>  v18.m128i_i64[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xD6EBDD7A0CEE792Bu</span>i64;
+</span></span><span style="display:flex;"><span>  v19.m128i_i64[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x3DC8C9558A64BA8A</span>i64;
+</span></span><span style="display:flex;"><span>  v18.m128i_i64[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xD6C6BCCF590828A8u</span>i64;
+</span></span><span style="display:flex;"><span>  v1 <span style="color:#f92672">=</span> _mm_load_si128(<span style="color:#f92672">&amp;</span>v18);
+</span></span><span style="display:flex;"><span>  v19.m128i_i64[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xC7884760EDC680EDu</span>i64;
+</span></span><span style="display:flex;"><span>  v16.m128i_i64[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xB7A3B00F62AB016Eu</span>i64;
+</span></span><span style="display:flex;"><span>  v16.m128i_i64[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xBAA4DD9B3C644CC6u</span>i64;
+</span></span><span style="display:flex;"><span>  v17.m128i_i64[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xC7884760EDC68088u</span>i64;
+</span></span><span style="display:flex;"><span>  v2 <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>(<span style="color:#66d9ef">__int64</span> <span style="color:#f92672">**</span>)a1;
+</span></span><span style="display:flex;"><span>  v17 <span style="color:#f92672">=</span> _mm_xor_si128(v17, v19);
+</span></span><span style="display:flex;"><span>  v16 <span style="color:#f92672">=</span> _mm_xor_si128(v1, v16);
+</span></span><span style="display:flex;"><span>  Export <span style="color:#f92672">=</span> FindExport(<span style="color:#f92672">*</span>v2, v16.m128i_i8, <span style="color:#ae81ff">0</span>i64, <span style="color:#ae81ff">0</span>i64);
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">/* redacted code */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> Export;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p>Code that is not pertinent to this article has been redacted.</p>
+</blockquote>
+<p>The majority of the function is included in a newly added section that is just for procedures that have been obfuscated. Jump wrappers within the text section are used to access the code.</p>
+<p><img src="https://i.imgur.com/ltz1MMk.png" alt=""></p>
+<h3 id="emulation">Emulation</h3>
+<p>An attacker can employ CPU emulators that provide complete granularity, such the <a href="https://unicorn-engine.org">Unicorn Engine</a>, in place of running the instructions on a real CPU. This article will use the Unicorn Engine.</p>
+<p>By using qemu as its foundation, Unicorn Engine can emulate the whole x86 instruction set, aslong with many others.</p>
+<h3 id="defeating">Defeating</h3>
+<p>An attacker could easily simulate the instructions that handle the string unwinding due to the design of the export resolving routines.</p>
+<p>Unfortunately, it would be difficult to emulate mid-function because the routines are obfuscated. An attacker might simulate the full code up until the unwinding is complete to overcome this barrier.</p>
+<p>A pointer-referencing parameter is provided to these functions. One may create a trap by taking advantage of this vulnerability and making the second dereference result in an exception.</p>
+<p><img src="https://i.imgur.com/BJt9iE8.png" alt=""></p>
+<p>The export name is already present in the rdx register at the time of the exception, pointing to the allocation in the stack.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>Voila! By using a CPU emulation framework and a code error that was artificially triggered, we were able to untangle the obfuscated imports.</p>
+<p><img src="https://i.imgur.com/TSWbeuq.png" alt=""></p>
+<p>The source code can be found <a href="https://github.com/AdvancedVectorExtensions/VanguardImportResolver">here</a>.</p>
+</div>
+      </section>
+      <footer>
+  <p>&copy; 2022 </p>
+</footer>
+    </main>
+  </body>
+</html>

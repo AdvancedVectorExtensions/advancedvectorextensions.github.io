@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Riot Vanguard on AVX&#39;s Blog</title>
+    <link>/tags/riot-vanguard/</link>
+    <description>Recent content in Riot Vanguard on AVX&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2022 AdvancedVectorExtensions</copyright>
+    <lastBuildDate>Thu, 24 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/riot-vanguard/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Defeating Vanguard&#39;s Import Protection</title>
+      <link>/2022/11/24/vanguard-import-protection/</link>
+      <pubDate>Thu, 24 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/2022/11/24/vanguard-import-protection/</guid>
+      <description>Introduction Being a fiercely competitive game, Valorant must demand no cheats and demands ongoing attention and devotion to keep cheaters at bay.
+Vangaurd, the barrier between heroes and cheaters, has been actively developing new strategies to hinder an attacker&amp;rsquo;s capacity to study the game and cheat. To shield the module from static analysis, Vanguard&amp;rsquo;s kernel component, vgk, uses an import protection method to protect important imports from prying eyes.
+Exploration In contrast to the previous article, Vanguard locates the necessary imports using dedicated resolving functions.</description>
+    </item>
+    
+  </channel>
+</rss>

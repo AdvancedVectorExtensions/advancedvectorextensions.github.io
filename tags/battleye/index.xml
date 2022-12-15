@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>BattlEye on AVX&#39;s Blog</title>
+    <link>/tags/battleye/</link>
+    <description>Recent content in BattlEye on AVX&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2022 AdvancedVectorExtensions</copyright>
+    <lastBuildDate>Tue, 29 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/battleye/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Defeating BattlEye&#39;s Dll Protection</title>
+      <link>/2022/11/29/battleye-dll-protection/</link>
+      <pubDate>Tue, 29 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/2022/11/29/battleye-dll-protection/</guid>
+      <description>Introduction The anti-cheat software BattlEye, considered the gold standard, has a catastrophic weakness that makes it easy for an attacker to insert code into the game&amp;rsquo;s address space.
+Dll injection is a well-known idea, but because of the numerous anti-cheat techniques used, attackers have resorted to manually mapping their modules into the game&amp;rsquo;s address space in order to get beyond the checks employed.
+Load Image Callback Several separate callbacks will initially be registered by the BattlEye driver when it is loaded into the kernel.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Roblox on AVX&#39;s Blog</title>
+    <link>/tags/roblox/</link>
+    <description>Recent content in Roblox on AVX&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2022 AdvancedVectorExtensions</copyright>
+    <lastBuildDate>Sun, 20 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/roblox/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Defeating Roblox&#39;s Import Protection</title>
+      <link>/2022/11/20/roblox-import-protection/</link>
+      <pubDate>Sun, 20 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/2022/11/20/roblox-import-protection/</guid>
+      <description>Introduction Roblox is a popular online game with an ever-growing player base. Due to its popularity, the game&amp;rsquo;s engineers require around-the-clock action to strategize new methods to thwart an attacker&amp;rsquo;s ability to analyse the behaviour of the game&amp;rsquo;s vital components.
+For an attacker, a trivial piece of the puzzle is to understand how the game operates. One of the many ways to achieve this is to examine the imports used within the process and perform further analysis based off the gathered results.</description>
+    </item>
+    
+  </channel>
+</rss>

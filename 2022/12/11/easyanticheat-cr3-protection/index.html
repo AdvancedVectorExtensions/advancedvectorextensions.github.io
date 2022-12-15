@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analyzing EasyAntiCheat&#39;s CR3 Protection | AVX&#39;s Blog</title>
+  <link rel="stylesheet" href="/assets/css/post.css" />
+  <script defer src="/assets/js/lbox.js"></script>
+  
+  <link rel="stylesheet" href="/assets/css/common.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+  <a class="site-title" href="/">AVX&#39;s Blog</a>
+</header>
+
+      <section class="article">
+        <div class="article-header">
+          <h2 class="article-title">Analyzing EasyAntiCheat&#39;s CR3 Protection</h2>
+          <small class="date">Sun Dec 11, 2022</small>
+          <div class="tags">
+            
+            <a href="/tags/EasyAntiCheat" class="tag">EasyAntiCheat</a>
+            
+          </div>
+        </div>
+        <div class="content"><h3 id="introduction">Introduction</h3>
+<p>As the desire for competitive gaming intensifies, so does the need to ensure that all players are on a level playing field. Enter EasyAntiCheat - the formidable wall between cheaters and legitimately minded players. This ingeniously crafted system utilizes sophisticated algorithms and cutting-edge software to detect, prevent and protect players from a variety of nefarious activities. Through its ability to stay one step ahead of modern cheating tactics, EasyAntiCheat has become the go-to solution for many gaming communities.</p>
+<h3 id="cr3">CR3</h3>
+<p>The CR3, also known as the page-directory base register, is an essential component of the x86 architecture. It is used to store the base physical address of the page directory for the current core. This special register is used to translate virtual addresses to physical addresses, allowing the CPU to access physical memory locations and is constantly updated during context switching. In addition, bits in the CR3 can be used to control options such as caching or write-through.</p>
+<p><img src="https://i.imgur.com/zk2yU0z.png" alt=""></p>
+<h3 id="general-protection-fault">General Protection Fault</h3>
+<p>When trying to access the CR3 used within a process safeguarded by EasyAntiCheat, one may observe that it causes a #GP(0). This is because EasyAntiCheat fabricates a uniquely constructed CR3 that is meant to promptly trigger an exception.
+<img src="https://i.imgur.com/7BIKosI.png" alt=""></p>
+<h3 id="dispatching-the-exception">Dispatching The Exception</h3>
+<p>By capturing all instructions that move to CR3 within my hypervisor, I was able to discern if the guest was attempting to invoke the corresponding exception. Upon confirming this, I logged the ensuing CR3 write in the present core and obtained EasyAntiCheat&rsquo;s <a href="https://www.klgrth.io/paste/ctxoa">exception routine</a> by inspecting the guest&rsquo;s RIP.
+<img src="https://i.imgur.com/6sFUvyh.png" alt=""></p>
+<p>This routine utilizes a variety of methods, such as comparing the bytes of the current instruction, to guarantee that they are successfully capturing the appropriate exception.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>v5 <span style="color:#f92672">=</span> (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">__int8</span>)<span style="color:#f92672">*</span>Rip <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">4</span>; <span style="color:#75715e">// always zero.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">if</span> ( <span style="color:#f92672">*</span>(_WORD <span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>Rip[v5] <span style="color:#f92672">==</span> <span style="color:#ae81ff">8719</span> )
+</span></span></code></pre></div><p>This RIP is then validated to ensure it is within an authorized area.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>v21 <span style="color:#f92672">=</span> a2<span style="color:#f92672">-&gt;</span>Rip;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> ( v21 <span style="color:#f92672">&gt;=</span> qword_F5240 <span style="color:#f92672">&amp;&amp;</span> v21 <span style="color:#f92672">&lt;</span> qword_F5248 )
+</span></span></code></pre></div><p>Lastly, after writing the CR3, the RIP is adjusted accordingly and a counter is incremented.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>v22 <span style="color:#f92672">=</span> v9 <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xBFFF000000000FFFu</span>i64 <span style="color:#f92672">|</span> ((__ROR8__(<span style="color:#f92672">*</span>(_QWORD <span style="color:#f92672">*</span>)(v16 <span style="color:#f92672">+</span> v11 <span style="color:#f92672">+</span> <span style="color:#ae81ff">20</span>), <span style="color:#ae81ff">29</span>) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFFFFFFFFF</span>i64) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">12</span>);
+</span></span><span style="display:flex;"><span>__writecr3(v22);
+</span></span><span style="display:flex;"><span>_InterlockedIncrement((<span style="color:#66d9ef">volatile</span> <span style="color:#66d9ef">signed</span> <span style="color:#66d9ef">__int32</span> <span style="color:#f92672">*</span>)v11);
+</span></span><span style="display:flex;"><span>a2<span style="color:#f92672">-&gt;</span>Rip <span style="color:#f92672">+=</span> v7 <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>; <span style="color:#75715e">// always two.
+</span></span></span></code></pre></div><h3 id="dispatching-the-hook">Dispatching The Hook</h3>
+<p>Upon verifying this as the correct procedure, I investigated the return stack and located the <a href="https://www.klgrth.io/paste/j9zmp">function</a> that dispatches EasyAntiCheat&rsquo;s hook.</p>
+<p>Upon a rigorous examination of the bottom of the function, I ascertained that EasyAntiCheat was utilizing a hook on a hal timer callback. This determination was made through the recognition of EasyAntiCheat&rsquo;s timer iteration and a reconstruction of the code for &ldquo;HalpTimerGetInternalData&rdquo;.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>  CurrentTimer <span style="color:#f92672">=</span> EAC<span style="color:#f92672">::</span>HalpRegisteredTimers;
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">while</span> ( <span style="color:#ae81ff">1</span> )
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>    v29 <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>(_QWORD <span style="color:#f92672">*</span>)CurrentTimer;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( <span style="color:#f92672">!*</span>(_QWORD <span style="color:#f92672">*</span>)CurrentTimer )
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>i64;
+</span></span><span style="display:flex;"><span>    InternalData <span style="color:#f92672">=</span> (<span style="color:#f92672">*</span>(_DWORD <span style="color:#f92672">*</span>)(v29 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0xE0</span>) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x10000</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">?</span> <span style="color:#f92672">*</span>(_QWORD <span style="color:#f92672">*</span>)(v29 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x48</span>) <span style="color:#f92672">+</span> <span style="color:#f92672">*</span>(<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>)(v29 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x50</span>) <span style="color:#f92672">*</span> (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">__int64</span>)HIDWORD(KeGetPcr()[<span style="color:#ae81ff">1</span>].LockArray)
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">:</span> <span style="color:#f92672">*</span>(_QWORD <span style="color:#f92672">*</span>)(v29 <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x48</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( InternalData <span style="color:#f92672">==</span> a1 )
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    CurrentTimer <span style="color:#f92672">+=</span> <span style="color:#ae81ff">0x10</span>i64;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ( (<span style="color:#66d9ef">__int64</span> <span style="color:#f92672">*</span>)CurrentTimer <span style="color:#f92672">==</span> <span style="color:#f92672">&amp;</span>qword_F5830 )
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>i64;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> (<span style="color:#f92672">*</span>(<span style="color:#66d9ef">__int64</span> (<span style="color:#66d9ef">__fastcall</span> <span style="color:#f92672">**</span>)(<span style="color:#66d9ef">__int64</span>, <span style="color:#66d9ef">__int64</span>, <span style="color:#66d9ef">__int64</span>, <span style="color:#66d9ef">__int64</span> <span style="color:#f92672">*</span>))(CurrentTimer<span style="color:#f92672">-&gt;</span>Callback))(a1, v29, CurrentTimer, <span style="color:#f92672">&amp;</span>qword_F5830);
+</span></span></code></pre></div><h3 id="hooking-the-exception">Hooking The Exception</h3>
+<p>Upon conducting a more thorough examination of the return stack, I found that EasyAntiCheat had implemented a hook onto the &ldquo;HalpStallCounter&rdquo; and &ldquo;HalpPerformanceCounter&rdquo; callbacks.</p>
+<p><img src="https://i.imgur.com/ydmP0hC.png" alt=""></p>
+<p>Unfortunately for EasyAntiCheat, this routine would be unable to initiate without a certain degree of tinkering in the kernel such as the &ldquo;KdpDebugRoutineSelect&rdquo; variable.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>To sum up, EasyAntiCheat has ventured beyond its normal domain by implementing a consummately devised hook and approach. Should additional assessments be conducted, such as properly verifying the thread, EasyAntiCheat can further progress towards its ambition of providing a cheat-free solution.</p>
+</div>
+      </section>
+      <footer>
+  <p>&copy; 2022 </p>
+</footer>
+    </main>
+  </body>
+</html>

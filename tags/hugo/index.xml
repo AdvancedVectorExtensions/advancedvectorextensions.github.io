@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hugo on AVX&#39;s Blog</title>
+    <link>/tags/hugo/</link>
+    <description>Recent content in hugo on AVX&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2022 AdvancedVectorExtensions</copyright>
+    <lastBuildDate>Thu, 04 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo Markdown</title>
+      <link>/2021/11/04/hugo-markdown/</link>
+      <pubDate>Thu, 04 Nov 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/2021/11/04/hugo-markdown/</guid>
+      <description>Text can be bold, italic, strikethrough or keyword
+Link to another page.
+There should be whitespace between paragraphs.
+There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
+Image Images can be clicked to enlarge :) .
+Header 1 This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on AVX&#39;s Blog</title>
+    <link>/tags/</link>
+    <description>Recent content in Tags on AVX&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>2022 AdvancedVectorExtensions</copyright>
+    <lastBuildDate>Sun, 11 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>EasyAntiCheat</title>
+      <link>/tags/easyanticheat/</link>
+      <pubDate>Sun, 11 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/easyanticheat/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>BattlEye</title>
+      <link>/tags/battleye/</link>
+      <pubDate>Tue, 29 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/battleye/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vanguard</title>
+      <link>/tags/vanguard/</link>
+      <pubDate>Thu, 24 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/vanguard/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
